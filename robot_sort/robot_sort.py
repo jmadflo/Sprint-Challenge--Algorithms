@@ -96,8 +96,29 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        while True:
+            # Everything to the left of the starting position is sorted
+        
+            # First pick up the item at your starting position
+            self.swap_item()
+            
+            # Go right in search of a smaller value item than the one you currently hold, and swap for it if you find one
+            while self.can_move_right():
+                self.move_right()
+                if self.compare_item() == 1:
+                    self.swap_item()
+
+            # We are now in the farthest right position with the item with the smallest value that is to the right of our starting position.
+            # Now remember we swapped the item at the starting position with our inital None, and we are holding the item with the lowest value to the right of the starting position, so we want the drop our current value in that None spot.
+            while self.compare_item() is not None: # We know this line will break the while loop only when we reach the position with a value of none because it returns None if the item at the current position is None or the item held is None and we know that we are holding an item that is not None (unless we are done in which case this loop will not run even once)
+                self.move_left()
+            self.swap_item()
+
+            # If you are not in the far right position at this point then there is still more sorting to be done. In this case, move right one space and run the function again in order to place the next item with the next lowest value in the next position. If you are in the far right position then you are done sorting! Nice job robot!
+            if self.can_move_right():
+                self.move_right()
+            else:
+                break
 
 
 if __name__ == "__main__":
